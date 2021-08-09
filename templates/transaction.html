@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    transaction
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+    {% if message %}
+        <p class="message">{{ message | safe }}</p>
+    {% endif %}
+    </div>
+    <form action="/transaction" method="POST">
+        <div class="form-group">
+            <label>phone number</label>
+            <input type="text" class="form-control" name="phone_number" placeholder="0912345678">
+        </div>
+        <div class="form-group">
+            <label>amount</label>
+            <input type="text" class="form-control" name="amount" placeholder="1200" min="1" max="10000">
+        </div>
+        <div class="form-group">
+            <label>category</label>
+            <select name="category">
+                <!-- use liquid -->
+                <option value="">select category</option>
+                <option value="manicure">manicure</option>
+                <option value="pedicure">pedicure</option>
+                <option value="facial">facial</option>
+                <option value="microblading">microblading</option>
+                <option value="hair_removal">hair removal</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <labl>details</label>
+            <textarea name="details" col="10" rows="3" placeholder="details"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="submit" class="btn">
+        </div>
+    </form>
+
+{% endblock %}

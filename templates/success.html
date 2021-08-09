@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    success
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h3>submitted</h3>
+        <p>your {{ action }} has beeen successfully saved. thank you!</p>
+    </div>
+    <div class="container">
+        {% if message %}
+            <p class="message">{{ message | safe }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

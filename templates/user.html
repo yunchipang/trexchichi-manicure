@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    user
+{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    {% if message %}
+        <p class="message">{{ message | safe }}</p>
+    {% endif %}
+    </div>
+    <form action="/user" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="phone_number" placeholder="phone number" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">submit</button>
+    </form>
+
+    <br>
+
+    {% if user %}
+    <h3>user information</h3>
+    <ul>
+        <li>username: {{ user.username }}</li>
+        <li>phone number: {{ user.phone_number }}</li>
+        <li>email: {{ user.email }}</li>
+        <li>birthday: {{ user.birthday }}</li>
+        <li>sign-up date: {{ user.signup_date }}</li>
+        <li>current cash: ${{ user.cash }}</li>
+    </ul>
+
+    <br>
+
+    <h3>transaction history</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>amount</th>
+                <th>datetime</th>
+                <th>category</th>
+                <th>details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in transaction %}
+            <tr>
+                <td>$ {{ row['amount'] }}</td>
+                <td>{{ row['datetime'] }}</td>
+                <td>{{ row['category'] }}</td>
+                <td>{{ row['details'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+{% endblock %}

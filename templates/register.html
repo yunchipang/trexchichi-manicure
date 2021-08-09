@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    register
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+    {% if message %}
+        <p class="message">{{ message | safe }}</p>
+    {% endif %}
+    </div>
+    <form action="/register" method="post">
+        <div class="form-group">
+            <label>username</label>
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder='username' type="text">
+        </div>
+        <div class="form-group">
+            <label>phone number</label>
+            <input class="form-control" name="phone_number" placeholder="0912345678" type="text">
+        </div>
+        <div class="form-group">
+            <label>email</label>
+            <input class="form-control" name="email" placeholder="example@gmail.com" type="text">
+        </div>
+        <div class="form-group">
+            <label>birthday</label>
+            <input class="form-control" name="birthday" placeholder="1990-01-01" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">register</button>
+    </form>
+{% endblock %}
