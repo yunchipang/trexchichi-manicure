@@ -1,3 +1,4 @@
+from os import environ
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
@@ -14,15 +15,7 @@ app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-ENV = 'dev'
-
-if ENV == 'dev':
-    app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/yunchipang/Documents/cs50_final_project/manicure/manicure.db'
-else: # production database
-    app.config['SQLALCHEMY_DATABASE_URI'] = ''
-    app.debug = False
-
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL') or 'sqlite:///myDB.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
