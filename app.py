@@ -16,9 +16,10 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///'+ os.path.join(basedir, 'manicure.db')
-if app.config['SQLALCHEMY_DATABASE_URI'].startswith("postgres://"):
-    uri = app.config['SQLALCHEMY_DATABASE_URI'].replace("postgres://", "postgresql://", 1)
+database_uri = os.environ.get('DATABASE_URL') or 'sqlite:///'+ os.path.join(basedir, 'manicure.db')
+if database_uri.startswith("postgres://"):
+    database_uri = database_uri.replace("postgres://", "postgresql://")
+app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
