@@ -1,4 +1,4 @@
-from os import environ
+import os
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
@@ -15,7 +15,8 @@ app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL') or 'sqlite:///myDB.db'
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///'+ os.path.join(basedir, 'manicure.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
