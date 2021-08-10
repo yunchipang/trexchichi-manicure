@@ -43,7 +43,7 @@ class Transaction(db.Model):
     category = db.Column(db.String(20), nullable=False)
     details = db.Column(db.String(100))
     # define foreign_key source
-    users = db.relationship('User', backref=db.backref('transactions', lazy=True))
+    #users = db.relationship('User', backref=db.backref('transactions', lazy=True))
 
 class Topup(db.Model):
     __tablename__ = 'topups'
@@ -52,7 +52,7 @@ class Topup(db.Model):
     amount = db.Column(db.Integer, nullable=False)
     datetime = db.Column(db.DateTime, nullable=False, default=datetime.now())
     # define foreign_key source
-    users = db.relationship('User', backref=db.backref('topups', lazy=True))
+    #users = db.relationship('User', backref=db.backref('topups', lazy=True))
 
 def login_required(f):
     '''
