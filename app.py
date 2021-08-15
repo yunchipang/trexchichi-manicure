@@ -3,11 +3,11 @@ from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, date
-
 from flask import session, redirect
 from functools import wraps
-
 from sqlalchemy.exc import IntegrityError
+
+
 
 app = Flask(__name__)
 
@@ -16,43 +16,14 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-database_uri = os.environ.get('DATABASE_URL') or 'sqlite:///'+ os.path.join(basedir, 'manicure.db')
-if database_uri.startswith("postgres://"):
-    database_uri = database_uri.replace("postgres://", "postgresql://")
-app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
+DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///'+ os.path.join(basedir, 'manicure.db')
+if DATABASE_URI.startswith("postgres://"):
+    DATABASE_URI = DATABASE_URI.replace("postgres://", "postgresql://")
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    phone_number = db.Column(db.String(10), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True)
-    birthday = db.Column(db.Date)
-    signup_date = db.Column(db.Date, default=date.today())
-    cash = db.Column(db.Integer, nullable=False, default=0)
-
-class Transaction(db.Model):
-    __tablename__ = 'transactions'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
-    datetime = db.Column(db.DateTime, nullable=False, default=datetime.now())
-    category = db.Column(db.String(20), nullable=False)
-    details = db.Column(db.String(100))
-    # define foreign_key source
-    #users = db.relationship('User', backref=db.backref('transactions', lazy=True))
-
-class Topup(db.Model):
-    __tablename__ = 'topups'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
-    datetime = db.Column(db.DateTime, nullable=False, default=datetime.now())
-    # define foreign_key source
-    #users = db.relationship('User', backref=db.backref('topups', lazy=True))
+db.init_app(app)
 
 def login_required(f):
     '''
@@ -67,6 +38,7 @@ def login_required(f):
     return decorated_function
 
 @app.route('/')
+@app.route('/index')
 def index():
     return render_template('index.html')
 
@@ -101,6 +73,8 @@ def logout():
 @app.route('/transaction', methods=['GET', 'POST'])
 @login_required
 def transaction():
+    from models import User, Transaction
+
     if request.method == 'POST':
         phone_number = request.form['phone_number']
         amount = request.form['amount']
@@ -126,6 +100,8 @@ def transaction():
 @app.route('/topup', methods=['GET', 'POST'])
 @login_required
 def topup():
+    from models import User, Topup
+
     if request.method == 'POST':
         phone_number = request.form['phone_number']
         amount = request.form['amount']
@@ -136,8 +112,7 @@ def topup():
         user = User.query.filter_by(phone_number=phone_number).first()
         if user is None:
             return render_template('topup.html', message='the customer does not exist, please register first.')
-        data = Topup(user_id=user.id, amount=amount)
-        db.session.add(data)
+        db.session.add(Topup(user_id=user.id, amount=amount))
         # update user.cash
         user.cash += int(amount)
         db.session.commit()
@@ -149,6 +124,8 @@ def topup():
 @app.route('/user', methods=['GET', 'POST'])
 @login_required
 def user():
+    from models import User, Transaction
+
     if request.method == 'POST':
         user = User.query.filter_by(phone_number=request.form.get('phone_number')).first()
         if user is None:
@@ -164,6 +141,8 @@ def user():
 @app.route('/register', methods=['GET', 'POST'])
 @login_required
 def register():
+    from models import User
+
     if request.method == 'POST':
         username = request.form['username']
         phone_number = request.form['phone_number']
@@ -185,4 +164,5 @@ def register():
     return render_template('register.html')
 
 if __name__ == '__main__':
+    app.debug = True
     app.run()
