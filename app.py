@@ -80,13 +80,13 @@ def transaction():
         details = request.form['details']
         
         if phone_number == '' or amount == '' or category == '' or details == '':
-            return render_template('index.html', message='please enter required fields.')
+            return render_template('transaction.html', message='please enter required fields.')
         
         user = User.query.filter_by(phone_number=phone_number).first()
         if user is None:
-            return render_template('index.html', message='the customer does not exist, please register first.')
+            return render_template('transaction.html', message='the customer does not exist, please register first.')
         if int(amount) > user.cash:
-            return render_template('index.html', message='payment exceeds current value, please top-up first.')
+            return render_template('transaction.html', message='payment exceeds current value, please top-up first.')
         data = Transaction(user_id=user.id, amount=amount, category=category, details=details)
         db.session.add(data)
         # update user.cash
