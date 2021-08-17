@@ -85,6 +85,8 @@ def transaction():
         user = User.query.filter_by(phone_number=phone_number).first()
         if user is None:
             return render_template('index.html', message='the customer does not exist, please register first.')
+        if int(amount) > user.cash:
+            return render_template('index.html', message='payment exceeds current value, please top-up first.')
         data = Transaction(user_id=user.id, amount=amount, category=category, details=details)
         db.session.add(data)
         # update user.cash
@@ -106,6 +108,8 @@ def topup():
 
         if phone_number == '' or amount == '':
             return render_template('topup.html', message='please enter required fields.')
+        if int(amount) > 10000:
+            return render_template('topup.html', message='the limit of single top-up is $10000')
 
         user = User.query.filter_by(phone_number=phone_number).first()
         if user is None:
@@ -149,6 +153,8 @@ def register():
 
         if username == '' or phone_number == '' or email == '' or birthday == '':
             return render_template('register.html', message='please enter all required fields.')
+        if len(phone_number) != 10:
+            return render_template('register.html', message='please enter a 10-digit number.')
 
         try:
             user = User(username=username, phone_number=phone_number, email=email, birthday=datetime.strptime(request.form['birthday'], '%Y-%m-%d').date())
@@ -162,5 +168,5 @@ def register():
     return render_template('register.html')
 
 if __name__ == '__main__':
-    app.debug = True
+    #app.debug = True
     app.run()
