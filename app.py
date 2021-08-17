@@ -7,8 +7,6 @@ from flask import session, redirect
 from functools import wraps
 from sqlalchemy.exc import IntegrityError
 
-
-
 app = Flask(__name__)
 
 app.config['SESSION_PERMANENT'] = False
