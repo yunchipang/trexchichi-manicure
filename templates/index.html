@@ -1,11 +1,46 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    index
+    home
 {% endblock %}
 
 {% block main %}
+<div class='container'>
+    <p class="h2">trexchichi's manicure shop</p>
+    <img src="/static/cosmetics-and-stationery-for-the-holiday.jpg" class="img-fluid" alt="Responsive image">
+</div>
 
-<h2>trexchichi's manicure shop</h2>
+<div class="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
+
+<div class='container'>
+    <p class='h2'>pricing</p>
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <dl class="row">
+                    <dt class="col">manicure</dt>
+                    <dd class="col-sm-6 text-right">$900</dd>
+            
+                    <dt class="col">pedicure</dt>
+                    <dd class="col-sm-6 text-right">$1000</dd>
+            
+                    <dt class="col">facial</dt>
+                    <dd class="col-sm-6 text-right">$2000</dd>
+             
+                    <dt class="col">micorblading</dt>
+                    <dd class="col-sm-6 text-right">$6000</dd>
+            
+                    <dt class="col">hair removal</dt>
+                    <dd class="col-sm-6 text-right">$3000</dd>
+            
+                    <dt class="col">eyelash extension</dt>
+                    <dd class="col-sm-6 text-right">$1500</dd>
+                </dl>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
