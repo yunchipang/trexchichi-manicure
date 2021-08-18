@@ -17,22 +17,8 @@
 
 ##### 2. database
 - **table1**: `users`
-
- id | username  | phone_number |          email           |  birthday  | signup_date |   cash
-----+-----------+--------------+--------------------------+------------+-------------+-----------
-  1 | demo      | 0912345678   | example@gmail.com        | 1990-01-01 | 2021-08-18  |      3800
-
 - **table2**: `transactions`
-
- id | user_id |  amount   |          datetime          |     category      |       details
-----+---------+-----------+----------------------------+-------------------+----------------------
-  1 |       1 |      5000 | 2021-08-18 15:53:02.806657 | facial            | thanks
-
 - **table3** `topups`
-
- id | user_id |  amount   |          datetime
-----+---------+-----------+----------------------------
-  1 |       1 |       500 | 2021-08-18 15:52:59.318729
 
 ### walk-through
 1. log in with username: `username` & password: `password`.
