@@ -1,10 +1,11 @@
 # trexchichi-manicure
 
-### video demo:  [https://youtu.be/2SF4djZxSsE](https://youtu.be/2SF4djZxSsE)
+- url: [https://trexchichi-manicure.herokuapp.com/](https://trexchichi-manicure.herokuapp.com/)
+- video demo:  [https://youtu.be/2SF4djZxSsE](https://youtu.be/2SF4djZxSsE)
 
 ### overview 
 
-**trexchichi-manicure** is a web-app inspired by the manicure studio I visit regularly. the web-app is built with Flask and a PostgreSQL database, hosted on Heroku. The main goal is to reduce human error when trying to find customer information in huge binders, and save time.
+**trexchichi-manicure** is a web-app inspired by the manicure studio I visit regularly. The main goal of the project is to reduce human error when trying to find customer information in huge binders, and save time. The web-app is built with Flask and a PostgreSQL database, hosted on Heroku.
 
 ##### 1. functions:
 - **log in**: the manicure studio has 1 admin only. Once a customer completes a beauty treatment, the admin logs in to the portal and records the payment.
