@@ -1,6 +1,6 @@
 # trexchichi-manicure
 
-- url: [https://trexchichi-manicure.herokuapp.com/](https://trexchichi-manicure.herokuapp.com/)
+- url: [https://trexchichi-manicure.herokuapp.com/](https://trexchichi-manicure.herokuapp.com/) update: the heroku site is no longer available after they ended the free hosting service. still trying to find a replacement!
 - video demo:  [https://youtu.be/2SF4djZxSsE](https://youtu.be/2SF4djZxSsE)
 
 ### overview 
